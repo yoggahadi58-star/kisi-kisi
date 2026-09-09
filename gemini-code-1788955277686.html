@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisi-Kisi Informatika Class X</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 700px;
+            background: #fff;
+            margin: auto;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header h1, .header h2, .header h3 {
+            margin: 5px 0;
+        }
+        .progress {
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .question-box {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #fafafa;
+            margin-bottom: 20px;
+        }
+        .question-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .options {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options label {
+            display: block;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover {
+            background-color: #e9ecef;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        .result-box {
+            text-align: center;
+            padding: 20px;
+        }
+        .score-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #28a745;
+            margin: 15px 0;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 10px auto;
+            width: 100%;
+            max-width: 300px;
+        }
+        table, th, td {
+            border: 1px solid #333;
+            padding: 6px 12px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>SMK REMAJA PLUIT</h1>
+        <h2>KISI-KISI INFORMATIKA</h2>
+        <h3>Kelas: X | Guru: Yogga Hadi S</h3>
+    </div>
+
+    <div id="quiz-body">
+        <div class="progress" id="progress-text">Soal 1 dari 25</div>
+        <div class="question-box">
+            <div class="question-title" id="question-text"></div>
+            <ul class="options" id="options-container"></ul>
+        </div>
+        <div class="nav-buttons">
+            <button id="prev-btn" onclick="prevQuestion()" disabled>Sebelumnya</button>
+            <button id="next-btn" onclick="nextQuestion()">Selanjutnya</button>
+        </div>
+    </div>
+
+    <div id="result-body" class="result-box" style="display: none;">
+        <h2>Kuis Selesai!</h2>
+        <p>Skor Akhir Anda:</p>
+        <div class="score-display" id="final-score">0</div>
+        <p id="score-summary"></p>
+        <button onclick="location.reload()">Ulangi Kuis</button>
+    </div>
+</div>
+
+<script>
+// Data awal Soal + Kunci Jawaban
+const rawQuestions = [
+    {
+        q: "Microsoft Word merupakan aplikasi yang digunakan untuk ....",
+        opts: ["Mengolah angka", "Mengolah kata dan dokumen", "Membuat animasi", "Mengedit video"],
+        ans: "Mengolah kata dan dokumen"
+    },
+    {
+        q: "Ikon Bold (B) pada Microsoft Word digunakan untuk ....",
+        opts: ["Memiringkan tulisan", "Menggarisbawahi tulisan", "Menebalkan tulisan", "Menghapus tulisan"],
+        ans: "Menebalkan tulisan"
+    },
+    {
+        q: "Shortcut keyboard untuk menyimpan dokumen Microsoft Word adalah ....",
+        opts: ["Ctrl + A", "Ctrl + C", "Ctrl + S", "Ctrl + V"],
+        ans: "Ctrl + S"
+    },
+    {
+        q: "Shortcut Ctrl + C pada Microsoft Word digunakan untuk ....",
+        opts: ["Menyalin teks", "Memotong teks", "Menempelkan teks", "Membuka dokumen"],
+        ans: "Menyalin teks"
+    },
+    {
+        q: "Perintah Ctrl + V berfungsi untuk ....",
+        opts: ["Menyimpan dokumen", "Menempelkan hasil salinan", "Membatalkan perintah", "Memilih seluruh teks"],
+        ans: "Menempelkan hasil salinan"
+    },
+    {
+        q: "Untuk membuat teks menjadi rata tengah, digunakan perintah ....",
+        opts: ["Align Left", "Align Right", "Justify", "Center"],
+        ans: "Center"
+    },
+    {
+        q: "Fitur pada Microsoft Word yang digunakan untuk membuat tulisan menjadi miring adalah ....",
+        opts: ["Bold", "Italic", "Underline", "Highlight"],
+        ans: "Italic"
+    },
+    {
+        q: "Untuk memberikan garis bawah pada teks digunakan tombol ....",
+        opts: ["B", "I", "U", "S"],
+        ans: "U"
+    },
+    {
+        q: "Perintah Save As digunakan untuk ....",
+        opts: ["Membuka dokumen baru", "Menutup Microsoft Word", "Menyimpan dokumen dengan nama atau lokasi baru", "Menghapus dokumen"],
+        ans: "Menyimpan dokumen dengan nama atau lokasi baru"
+    },
+    {
+        q: "Salah satu contoh ekstensi file Microsoft Word adalah ....",
+        opts: [".xlsx", ".pptx", ".docx", ".jpg"],
+        ans: ".docx"
+    },
+    {
+        q: "Microsoft Excel merupakan aplikasi yang digunakan terutama untuk ....",
+        opts: ["Mengolah angka dan data", "Membuat video", "Menggambar", "Mengedit foto"],
+        ans: "Mengolah angka dan data"
+    },
+    {
+        q: "Pertemuan antara baris dan kolom pada Microsoft Excel disebut ....",
+        opts: ["Worksheet", "Cell", "Workbook", "Ribbon"],
+        ans: "Cell"
+    },
+    {
+        q: "Kolom pada Microsoft Excel ditandai dengan ....",
+        opts: ["Angka", "Huruf", "Simbol", "Warna"],
+        ans: "Huruf"
+    },
+    {
+        q: "Baris pada Microsoft Excel ditandai dengan ....",
+        opts: ["Huruf", "Angka", "Simbol", "Rumus"],
+        ans: "Angka"
+    },
+    {
+        q: "Alamat cell yang berada pada kolom B dan baris 5 adalah ....",
+        opts: ["5B", "B5", "B-5", "5-B"],
+        ans: "B5"
+    },
+    {
+        q: "Setiap rumus dalam Microsoft Excel biasanya diawali dengan tanda ....",
+        opts: ["+", "-", "=", "*"],
+        ans: "="
+    },
+    {
+        q: "Rumus yang digunakan untuk menjumlahkan data dari cell A1 sampai A5 adalah ....",
+        opts: ["=ADD(A1:A5)", "=TOTAL(A1:A5)", "=SUM(A1:A5)", "=COUNT(A1:A5)"],
+        ans: "=SUM(A1:A5)"
+    },
+    {
+        q: "Rumus =AVERAGE(A1:A5) digunakan untuk mencari ....",
+        opts: ["Nilai terbesar", "Nilai terkecil", "Jumlah data", "Nilai rata-rata"],
+        ans: "Nilai rata-rata"
+    },
+    {
+        q: "Rumus =MAX(A1:A10) digunakan untuk mencari ....",
+        opts: ["Nilai terbesar", "Nilai terkecil", "Jumlah data", "Nilai rata-rata"],
+        ans: "Nilai terbesar"
+    },
+    {
+        q: "Jika cell A1 berisi angka 10 dan B1 berisi angka 5, rumus untuk menjumlahkan kedua angka tersebut adalah ....",
+        opts: ["=A1-B1", "=A1+B1", "=A1*B1", "=A1/B1"],
+        ans: "=A1+B1"
+    },
+
+    // Soal Esai yang diubah ke Pilihan Ganda
+    {
+        q: "Aplikasi Microsoft Word adalah program pengolah kata. Salah satu fungsi utamanya adalah ....",
+        opts: ["Membuat dokumen teks seperti surat atau laporan", "Melakukan kalkulasi akuntansi kompleks", "Mengedit musik dan file audio", "Merancang basis data relasional"],
+        ans: "Membuat dokumen teks seperti surat atau laporan"
+    },
+    {
+        q: "Perbedaan utama antara fungsi Cut dan Copy pada Microsoft Word adalah ....",
+        opts: ["Cut menghapus teks asli sedangkan Copy menggandakannya", "Cut menggandakan teks sedangkan Copy menghapusnya", "Cut menyimpan teks ke flashdisk sedangkan Copy ke harddisk", "Cut dan Copy memiliki fungsi yang sama persis"],
+        ans: "Cut menghapus teks asli sedangkan Copy menggandakannya"
+    },
+    {
+        q: "Dalam Microsoft Excel, bagian mendatar yang diidentifikasi dengan angka dinamakan ....",
+        opts: ["Baris (Row)", "Kolom (Column)", "Cell", "Workbook"],
+        ans: "Baris (Row)"
+    },
+    {
+        q: "Rumus Excel yang digunakan secara berurutan untuk mencari (1) rata-rata dan (2) nilai terendah adalah ....",
+        opts: ["=AVERAGE() dan =MIN()", "=SUM() dan =MAX()", "=COUNT() dan =MIN()", "=AVERAGE() dan =MAX()"],
+        ans: "=AVERAGE() dan =MIN()"
+    },
+    {
+        q: `Perhatikan data berikut:<br>
+        <table>
+            <tr><th>No</th><th>Nama</th><th>Nilai</th></tr>
+            <tr><td>1</td><td>Andi</td><td>80 (Cell B2)</td></tr>
+            <tr><td>2</td><td>Budi</td><td>75 (Cell B3)</td></tr>
+            <tr><td>3</td><td>Citra</td><td>90 (Cell B4)</td></tr>
+            <tr><td>4</td><td>Dinda</td><td>85 (Cell B5)</td></tr>
+            <tr><td>5</td><td>Eko</td><td>70 (Cell B6)</td></tr>
+        </table>
+        Rumus Excel yang tepat untuk menghitung <b>jumlah seluruh nilai</b> dan <b>nilai tertinggi</b> dari B2 sampai B6 berturut-turut adalah ....`,
+        opts: [
+            "=SUM(B2:B6) dan =MAX(B2:B6)",
+            "=TOTAL(B2:B6) dan =HIGH(B2:B6)",
+            "=ADD(B2:B6) dan =MAX(B2:B6)",
+            "=SUM(B2:B6) dan =AVERAGE(B2:B6)"
+        ],
+        ans: "=SUM(B2:B6) dan =MAX(B2:B6)"
+    }
+];
+
+let questions = [];
+let currentIndex = 0;
+let userAnswers = {};
+
+// Fungsi Acak Array (Fisher-Yates)
+function shuffle(array) {
+    let arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// Inisialisasi Soal & Acak Opsi
+function initQuiz() {
+    let shuffledQ = shuffle(rawQuestions);
+    questions = shuffledQ.map(qObj => {
+        let shuffledOpts = shuffle(qObj.opts);
+        return {
+            q: qObj.q,
+            opts: shuffledOpts,
+            ans: qObj.ans
+        };
+    });
+    showQuestion();
+}
+
+// Tampilkan Soal
+function showQuestion() {
+    const q = questions[currentIndex];
+    document.getElementById("progress-text").innerText = `Soal ${currentIndex + 1} dari ${questions.length}`;
+    document.getElementById("question-text").innerHTML = `${currentIndex + 1}. ${q.q}`;
+
+    const optsContainer = document.getElementById("options-container");
+    optsContainer.innerHTML = "";
+
+    const labels = ['A', 'B', 'C', 'D'];
+    q.opts.forEach((opt, idx) => {
+        const isChecked = userAnswers[currentIndex] === opt ? "checked" : "";
+        optsContainer.innerHTML += `
+            <li>
+                <label>
+                    <input type="radio" name="option" value="${opt}" ${isChecked} onchange="selectAnswer('${opt}')">
+                    <b>${labels[idx]}.</b> ${opt}
+                </label>
+            </li>
+        `;
+    });
+
+    document.getElementById("prev-btn").disabled = currentIndex === 0;
+    
+    if (currentIndex === questions.length - 1) {
+        document.getElementById("next-btn").innerText = "Selesai & Lihat Skor";
+    } else {
+        document.getElementById("next-btn").innerText = "Selanjutnya";
+    }
+}
+
+// Simpan Jawaban
+function selectAnswer(selectedOpt) {
+    userAnswers[currentIndex] = selectedOpt;
+}
+
+// Navigasi Next
+function nextQuestion() {
+    if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        showQuestion();
+    } else {
+        calculateScore();
+    }
+}
+
+// Navigasi Prev
+function prevQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showQuestion();
+    }
+}
+
+// Hitung Skor Akhir
+function calculateScore() {
+    let correctCount = 0;
+
+    questions.forEach((q, idx) => {
+        if (userAnswers[idx] === q.ans) {
+            correctCount++;
+        }
+    });
+
+    const score = Math.round((correctCount / questions.length) * 100);
+
+    document.getElementById("quiz-body").style.display = "none";
+    document.getElementById("result-body").style.display = "block";
+    document.getElementById("final-score").innerText = score;
+    document.getElementById("score-summary").innerText = `Anda menjawab benar ${correctCount} dari ${questions.length} soal.`;
+}
+
+// Jalankan Kuis saat halaman dimuat
+document.addEventListener("DOMContentLoaded", initQuiz);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisi-Kisi Koding dan AI Class X</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 700px;
+            background: #fff;
+            margin: auto;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header h1, .header h2, .header h3 {
+            margin: 5px 0;
+        }
+        .progress {
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .question-box {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #fafafa;
+            margin-bottom: 20px;
+        }
+        .question-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .options {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options label {
+            display: block;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .options label:hover {
+            background-color: #e9ecef;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        .result-box {
+            text-align: center;
+            padding: 20px;
+        }
+        .score-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #28a745;
+            margin: 15px 0;
+        }
+        .code-block {
+            background-color: #eef2f5;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+            color: #0056b3;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 10px auto;
+            width: 100%;
+            max-width: 300px;
+        }
+        table, th, td {
+            border: 1px solid #333;
+            padding: 6px 12px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>SMK REMAJA PLUIT</h1>
+        <h2>KISI-KISI KODING DAN AI</h2>
+        <h3>Kelas: X | Guru: Yogga Hadi S | KKTP: 75</h3>
+    </div>
+
+    <div id="quiz-body">
+        <div class="progress" id="progress-text">Soal 1 dari 25</div>
+        <div class="question-box">
+            <div class="question-title" id="question-text"></div>
+            <ul class="options" id="options-container"></ul>
+        </div>
+        <div class="nav-buttons">
+            <button id="prev-btn" onclick="prevQuestion()" disabled>Sebelumnya</button>
+            <button id="next-btn" onclick="nextQuestion()">Selanjutnya</button>
+        </div>
+    </div>
+
+    <div id="result-body" class="result-box" style="display: none;">
+        <h2>Kuis Selesai!</h2>
+        <p>Skor Akhir Anda:</p>
+        <div class="score-display" id="final-score">0</div>
+        <p id="score-summary"></p>
+        <button onclick="location.reload()">Ulangi Kuis</button>
+    </div>
+</div>
+
+<script>
+// Data awal Soal + Kunci Jawaban Koding dan AI
+const rawQuestions = [
+    {
+        q: "Scratch adalah aplikasi atau platform yang digunakan untuk belajar ....",
+        opts: ["Menggambar secara manual", "Pemrograman dengan cara yang mudah dan visual", "Mengedit dokumen", "Mengolah angka"],
+        ans: "Pemrograman dengan cara yang mudah dan visual"
+    },
+    {
+        q: "Dalam Scratch, objek/karakter yang dapat diprogram dan diberi perintah dinamakan ....",
+        opts: ["Sprite", "Stage", "Block", "Variables"],
+        ans: "Sprite"
+    },
+    {
+        q: "Tempat di mana sprite bergerak dan program Scratch ditampilkan disebut ....",
+        opts: ["Toolbar", "Stage", "Block", "Menu"],
+        ans: "Stage"
+    },
+    {
+        q: "Blok <span class='code-block'>when green flag clicked</span> pada Scratch digunakan untuk ....",
+        opts: ["Menghapus sprite", "Menghentikan program", "Memulai program ketika bendera hijau diklik", "Mengubah warna sprite"],
+        ans: "Memulai program ketika bendera hijau diklik"
+    },
+    {
+        q: "Blok <span class='code-block'>move 10 steps</span> digunakan untuk ....",
+        opts: ["Membuat sprite berbicara", "Menggerakkan sprite", "Menghapus sprite", "Mengubah latar"],
+        ans: "Menggerakkan sprite"
+    },
+    {
+        q: "Blok Scratch yang digunakan untuk melakukan pengulangan perintah adalah ....",
+        opts: ["Say", "Repeat", "Move", "Wait"],
+        ans: "Repeat"
+    },
+    {
+        q: "Jika ingin membuat sprite mengatakan 'Halo!', blok yang tepat adalah ....",
+        opts: ["Move", "Turn", "Say", "Repeat"],
+        ans: "Say"
+    },
+    {
+        q: "Data adalah ....",
+        opts: ["Kumpulan informasi yang dapat digunakan untuk diolah dan dianalisis", "Hanya berupa gambar", "Hanya berupa angka", "Program komputer"],
+        ans: "Kumpulan informasi yang dapat digunakan untuk diolah dan dianalisis"
+    },
+    {
+        q: "Contoh data kuantitatif adalah ....",
+        opts: ["Warna kesukaan siswa", "Jenis makanan favorit", "Jumlah siswa dalam kelas", "Nama siswa"],
+        ans: "Jumlah siswa dalam kelas"
+    },
+    {
+        q: "Perhatikan data berikut: 70, 80, 90, 80, 70. Nilai yang paling sering muncul disebut ....",
+        opts: ["Mean", "Median", "Modus", "Minimum"],
+        ans: "Modus"
+    },
+    {
+        q: "Nilai rata-rata dari data 70, 80, dan 90 adalah ....",
+        opts: ["70", "75", "80", "90"],
+        ans: "80"
+    },
+    {
+        q: "Median adalah ....",
+        opts: ["Nilai yang paling besar", "Nilai yang berada di tengah setelah data diurutkan", "Nilai yang paling sering muncul", "Jumlah seluruh data"],
+        ans: "Nilai yang berada di tengah setelah data diurutkan"
+    },
+    {
+        q: "Tujuan utama melakukan analisis data adalah ....",
+        opts: ["Menghapus semua data", "Mengubah data menjadi informasi yang dapat dipahami", "Membuat data menjadi lebih banyak", "Menyembunyikan data"],
+        ans: "Mengubah data menjadi informasi yang dapat dipahami"
+    },
+    {
+        q: "Salah satu cara menyajikan data agar lebih mudah dipahami adalah menggunakan ....",
+        opts: ["Diagram atau grafik", "Password", "Folder", "Keyboard"],
+        ans: "Diagram atau grafik"
+    },
+    {
+        q: "Berpikir komputasional adalah cara berpikir untuk ....",
+        opts: ["Menghafalkan semua perintah komputer", "Memecahkan masalah secara logis dan sistematis", "Menggunakan komputer sepanjang hari", "Membuat komputer menjadi lebih cepat"],
+        ans: "Memecahkan masalah secara logis dan sistematis"
+    },
+    {
+        q: "Memecah masalah besar menjadi beberapa masalah kecil disebut ....",
+        opts: ["Algoritma", "Dekomposisi", "Abstraksi", "Evaluasi"],
+        ans: "Dekomposisi"
+    },
+    {
+        q: "Mencari kesamaan atau pola dari beberapa masalah disebut ....",
+        opts: ["Pengenalan pola", "Dekomposisi", "Pengurutan", "Pengkodean"],
+        ans: "Pengenalan pola"
+    },
+    {
+        q: "Dalam berpikir komputasional, abstraksi berarti ....",
+        opts: ["Memperhatikan semua hal secara rinci", "Mengabaikan informasi yang tidak penting dan fokus pada hal utama", "Menghapus seluruh data", "Mengulang perintah"],
+        ans: "Mengabaikan informasi yang tidak penting dan fokus pada hal utama"
+    },
+    {
+        q: "Urutan langkah-langkah yang sistematis untuk menyelesaikan suatu masalah disebut ....",
+        opts: ["Data", "Algoritma", "Sprite", "Variabel"],
+        ans: "Algoritma"
+    },
+    {
+        q: "Perhatikan langkah berikut:<br>1. Memasukkan pakaian ke mesin cuci<br>2. Menambahkan deterjen<br>3. Memilih program pencucian<br>4. Menekan tombol mulai<br>Urutan langkah tersebut merupakan contoh ....",
+        opts: ["Data", "Algoritma", "Abstraksi", "Pengenalan pola"],
+        ans: "Algoritma"
+    },
+
+    // Soal Esai yang diubah ke Pilihan Ganda
+    {
+        q: "Pengertian Scratch yang paling tepat beserta contoh proyek yang bisa dibuat dengannya adalah ....",
+        opts: [
+            "Platform pemrograman visual blok untuk membuat game interaktif dan animasi",
+            "Aplikasi spreadsheet untuk membuat grafik statistik",
+            "Bahasa pemrograman teks berbasis command-line untuk database",
+            "Software desainer grafis untuk mengedit foto portrait"
+        ],
+        ans: "Platform pemrograman visual blok untuk membuat game interaktif dan animasi"
+    },
+    {
+        q: "Elemen Scratch berikut yang berfungsi sebagai tempat berjalannya program dan susunan perintah berturut-turut dinamakan ....",
+        opts: [
+            "Stage dan Block",
+            "Sprite dan Variable",
+            "Toolbar dan Menu",
+            "Sound dan Costumes"
+        ],
+        ans: "Stage dan Block"
+    },
+    {
+        q: "Diketahui data nilai: <b>70, 80, 90, 80, 100</b>. Hasil perhitungan Mean (rata-rata), Median (nilai tengah), dan Modus (sering muncul) berturut-turut adalah ....",
+        opts: [
+            "Mean: 84, Median: 80, Modus: 80",
+            "Mean: 80, Median: 80, Modus: 70",
+            "Mean: 84, Median: 90, Modus: 80",
+            "Mean: 82, Median: 80, Modus: 100"
+        ],
+        ans: "Mean: 84, Median: 80, Modus: 80"
+    },
+    {
+        q: "Tiga fondasi berpikir komputasional yaitu Dekomposisi, Pengenalan Pola, dan Abstraksi secara berurutan memiliki arti ....",
+        opts: [
+            "Memecah masalah, mencari kesamaan pola, dan fokus pada hal penting",
+            "Menyusun algoritma, menguji program, dan menghapus error",
+            "Fokus pada hal penting, memecah masalah, dan mengulang langkah",
+            "Mencari pola, membuat variabel, dan mengeksekusi kode"
+        ],
+        ans: "Memecah masalah, mencari kesamaan pola, dan fokus pada hal penting"
+    },
+    {
+        q: "Urutan algoritma sederhana yang paling tepat untuk menyiapkan komputer sebelum belajar adalah ....",
+        opts: [
+            "Hubungkan daya -> Tekan tombol Power -> Tunggu boot -> Buka aplikasi belajar -> Siapkan materi",
+            "Buka aplikasi belajar -> Tekan tombol Power -> Hubungkan daya -> Siapkan materi",
+            "Tekan tombol Power -> Buka aplikasi belajar -> Hubungkan daya -> Tunggu boot",
+            "Siapkan materi -> Buka aplikasi belajar -> Tekan tombol Power -> Hubungkan daya"
+        ],
+        ans: "Hubungkan daya -> Tekan tombol Power -> Tunggu boot -> Buka aplikasi belajar -> Siapkan materi"
+    }
+];
+
+let questions = [];
+let currentIndex = 0;
+let userAnswers = {};
+
+// Fungsi Acak Array (Fisher-Yates)
+function shuffle(array) {
+    let arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// Inisialisasi Soal & Acak Opsi
+function initQuiz() {
+    let shuffledQ = shuffle(rawQuestions);
+    questions = shuffledQ.map(qObj => {
+        let shuffledOpts = shuffle(qObj.opts);
+        return {
+            q: qObj.q,
+            opts: shuffledOpts,
+            ans: qObj.ans
+        };
+    });
+    showQuestion();
+}
+
+// Tampilkan Soal
+function showQuestion() {
+    const q = questions[currentIndex];
+    document.getElementById("progress-text").innerText = `Soal ${currentIndex + 1} dari ${questions.length}`;
+    document.getElementById("question-text").innerHTML = `${currentIndex + 1}. ${q.q}`;
+
+    const optsContainer = document.getElementById("options-container");
+    optsContainer.innerHTML = "";
+
+    const labels = ['A', 'B', 'C', 'D'];
+    q.opts.forEach((opt, idx) => {
+        const isChecked = userAnswers[currentIndex] === opt ? "checked" : "";
+        optsContainer.innerHTML += `
+            <li>
+                <label>
+                    <input type="radio" name="option" value="${opt}" ${isChecked} onchange="selectAnswer('${opt}')">
+                    <b>${labels[idx]}.</b> ${opt}
+                </label>
+            </li>
+        `;
+    });
+
+    document.getElementById("prev-btn").disabled = currentIndex === 0;
+    
+    if (currentIndex === questions.length - 1) {
+        document.getElementById("next-btn").innerText = "Selesai & Lihat Skor";
+    } else {
+        document.getElementById("next-btn").innerText = "Selanjutnya";
+    }
+}
+
+// Simpan Jawaban
+function selectAnswer(selectedOpt) {
+    userAnswers[currentIndex] = selectedOpt;
+}
+
+// Navigasi Next
+function nextQuestion() {
+    if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        showQuestion();
+    } else {
+        calculateScore();
+    }
+}
+
+// Navigasi Prev
+function prevQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showQuestion();
+    }
+}
+
+// Hitung Skor Akhir
+function calculateScore() {
+    let correctCount = 0;
+
+    questions.forEach((q, idx) => {
+        if (userAnswers[idx] === q.ans) {
+            correctCount++;
+        }
+    });
+
+    const score = Math.round((correctCount / questions.length) * 100);
+
+    document.getElementById("quiz-body").style.display = "none";
+    document.getElementById("result-body").style.display = "block";
+    document.getElementById("final-score").innerText = score;
+    document.getElementById("score-summary").innerText = `Anda menjawab benar ${correctCount} dari ${questions.length} soal.`;
+}
+
+// Jalankan Kuis saat halaman dimuat
+document.addEventListener("DOMContentLoaded", initQuiz);
+</script>
+
+</body>
+</html>
