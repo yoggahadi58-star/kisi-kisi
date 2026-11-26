@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisi-Kisi PAS Ganjil - Informatika (Kelas X MPLB)</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --accent: #2563eb;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-body: #f3f4f6;
+            --border: #e5e7eb;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 820px;
+            background: #ffffff;
+            margin: auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        /* Kop Surat Sekolah */
+        .kop-surat {
+            text-align: center;
+            border-bottom: 3px double #111827;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .kop-surat .yayasan {
+            font-size: 0.9em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+        .kop-surat h1 {
+            margin: 4px 0;
+            font-size: 1.5em;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+        .kop-surat h2 {
+            margin: 2px 0;
+            font-size: 1.15em;
+            font-weight: 700;
+        }
+        .kop-surat .tahun {
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        .meta-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 0.92em;
+            background-color: #f9fafb;
+            border: 1px solid var(--border);
+        }
+        .meta-table td {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+        }
+        .meta-table td:nth-child(odd) {
+            font-weight: 600;
+            width: 18%;
+            background-color: #f3f4f6;
+        }
+        .meta-table td:nth-child(even) {
+            width: 32%;
+        }
+
+        /* Form Identitas */
+        .identity-card {
+            background: var(--primary-light);
+            border: 1px solid #bfdbfe;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .identity-card h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 1.1em;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95em;
+        }
+        .petunjuk {
+            font-size: 0.88em;
+            background: #fff;
+            padding: 12px 15px;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent);
+            margin-bottom: 15px;
+        }
+        .petunjuk ol {
+            margin: 5px 0 0 0;
+            padding-left: 20px;
+        }
+
+        /* Progress & Navigasi Nomor */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Kotak Soal */
+        .question-box {
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background-color: #ffffff;
+            margin-bottom: 20px;
+        }
+        .badge-tipe {
+            display: inline-block;
+            font-size: 0.78em;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background-color: #dbeafe;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        .question-title {
+            font-size: 1.05em;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .code-block {
+            background-color: #f1f5f9;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
+        }
+        .options {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        .options label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .options label:hover {
+            background-color: #f8fafc;
+            border-color: var(--accent);
+        }
+        .options input[type="radio"] {
+            margin-top: 4px;
+            margin-right: 12px;
+            accent-color: var(--accent);
+        }
+
+        /* Tombol */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .btn {
+            padding: 10px 22px;
+            font-size: 0.95em;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            background-color: var(--accent);
+            color: white;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+        .btn:hover:not(:disabled) {
+            background-color: var(--primary);
+        }
+        .btn-success {
+            background-color: var(--success);
+        }
+        .btn-success:hover {
+            background-color: #15803d;
+        }
+
+        /* Hasil & Pembahasan */
+        .result-box {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .score-card {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0 25px 0;
+        }
+        .score-display {
+            font-size: 3.2em;
+            font-weight: 800;
+            color: var(--success);
+            margin: 5px 0;
+        }
+        .kktp-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 700;
+        }
+        /* Kotak Pesan / Konfirmasi Custom (Pengganti alert & confirm) */
+        .alert-banner {
+            display: none;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.92em;
+            font-weight: 500;
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+        .confirm-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .confirm-modal {
+            background: #fff;
+            max-width: 420px;
+            width: 100%;
+            padding: 22px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .confirm-modal h4 {
+            margin: 0 0 10px 0;
+            color: var(--primary);
+            font-size: 1.15em;
+        }
+        .confirm-modal p {
+            margin: 0 0 20px 0;
+            font-size: 0.95em;
+            color: var(--text-dark);
+        }
+        .confirm-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-secondary {
+            background-color: #6b7280;
+        }
+        .btn-secondary:hover {
+            background-color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Kop Surat -->
+    <div class="kop-surat">
+        <div class="yayasan">YAYASAN PENDIDIKAN NASIONAL</div>
+        <h1>SMK REMAJA PLUIT</h1>
+        <h2>KISI-KISI PAS GANJIL</h2>
+        <div class="tahun">TAHUN AJARAN 2026 - 2027</div>
+    </div>
+
+    <table class="meta-table">
+        <tr>
+            <td>Mata Pelajaran</td>
+            <td>: INFORMATIKA</td>
+            <td>Nama Guru</td>
+            <td>: Yogga Hadi Sutisna, S.Kom</td>
+        </tr>
+        <tr>
+            <td>Jenjang / Kelas</td>
+            <td>: SMK - X MPLB</td>
+            <td>Alokasi Waktu</td>
+            <td>: 90 Menit (KKTP: 75)</td>
+        </tr>
+    </table>
+
+    <!-- Tahap 1: Identitas Peserta -->
+    <div id="start-screen" class="identity-card">
+        <h3>Identitas Peserta Ujian</h3>
+        <div id="form-alert" class="alert-banner"></div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="student-name">Nama Lengkap *</label>
+                <input type="text" id="student-name" placeholder="Masukkan nama lengkap Anda...">
+            </div>
+            <div class="form-group">
+                <label for="student-class">Kelas / Jurusan *</label>
+                <input type="text" id="student-class" placeholder="Contoh: X MPLB / X AKL">
+            </div>
+        </div>
+        <div class="petunjuk">
+            <strong>PETUNJUK UMUM:</strong>
+            <ol>
+                <li>Berdoalah sebelum mulai mengerjakan naskah soal latihan/ujian.</li>
+                <li>Kisi-kisi ini terdiri dari <strong>45 soal Pilihan Ganda</strong> yang diacak secara otomatis.</li>
+                <li>Periksa dan bacalah soal-soal dengan teliti sebelum menjawab.</li>
+                <li>Dahulukan menjawab soal-soal yang dianggap paling mudah.</li>
+            </ol>
+        </div>
+        <button class="btn" onclick="startExam()">Mulai Mengerjakan</button>
+    </div>
+
+    <!-- Tahap 2: Area Ujian -->
+    <div id="quiz-body" style="display: none;">
+        <div class="top-bar">
+            <span id="student-badge">Peserta: -</span>
+            <span id="progress-text">Soal 1 dari 45</span>
+        </div>
+
+        <div class="question-box">
+            <div class="question-title" id="question-text"></div>
+            <div id="answer-area"></div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="btn" id="prev-btn" onclick="prevQuestion()" disabled>Sebelumnya</button>
+            <button class="btn" id="next-btn" onclick="nextQuestion()">Selanjutnya</button>
+        </div>
+    </div>
+
+    <!-- Tahap 3: Hasil Nilai -->
+    <div id="result-body" class="result-box" style="display: none;">
+        <h2>Kuis Selesai!</h2>
+        <p id="result-student-info" style="font-weight: 600; color: var(--text-muted);"></p>
+
+        <div class="score-card">
+            <div>Nilai Akhir Anda:</div>
+            <div class="score-display" id="final-score">0</div>
+            <div id="kktp-status" class="kktp-badge"></div>
+            <p id="score-summary" style="margin-bottom: 0; font-size: 0.95em;"></p>
+        </div>
+
+        <button class="btn" onclick="restartExam()">Kembali Mulai Mengerjakan</button>
+    </div>
+</div>
+
+<!-- Modal Konfirmasi Selesai Ujian -->
+<div id="confirm-modal-backdrop" class="confirm-modal-backdrop">
+    <div class="confirm-modal">
+        <h4>Konfirmasi Pengumpulan</h4>
+        <p id="confirm-modal-text">Apakah Anda yakin ingin mengumpulkan ujian sekarang?</p>
+        <div class="confirm-actions">
+            <button class="btn btn-secondary" onclick="closeConfirmModal()">Periksa Kembali</button>
+            <button class="btn btn-success" onclick="confirmFinishExam()">Ya, Kumpulkan</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const rawQuestions = [
+    // I. PILIHAN GANDA (1 - 40) - MICROSOFT WORD & HARDWARE KOMPUTER
+    {
+        q: "Perangkat lunak yang digunakan untuk mengolah kata disebut sebagai...",
+        opts: [
+            "Microsoft Word",
+            "Microsoft Excel",
+            "Microsoft PowerPoint",
+            "Microsoft Access",
+            "Adobe Photoshop"
+        ],
+        ans: "Microsoft Word"
+    },
+    {
+        q: "Kombinasi tombol keyboard yang digunakan untuk menyalin (copy) teks adalah...",
+        opts: ["Ctrl + S", "Ctrl + X", "Ctrl + C", "Ctrl + V", "Ctrl + P"],
+        ans: "Ctrl + C"
+    },
+    {
+        q: "Untuk menempelkan (paste) teks yang sudah disalin, tombol yang digunakan adalah...",
+        opts: ["Ctrl + V", "Ctrl + P", "Ctrl + Z", "Ctrl + A", "Ctrl + N"],
+        ans: "Ctrl + V"
+    },
+    {
+        q: "Menu yang digunakan untuk memasukkan tabel ke dalam dokumen Microsoft Word adalah...",
+        opts: ["Home", "Insert", "Design", "Layout", "References"],
+        ans: "Insert"
+    },
+    {
+        q: "Ikon yang digunakan untuk membuat tulisan menjadi tebal adalah...",
+        opts: ["Italic", "Underline", "Strikethrough", "Bold", "Subscript"],
+        ans: "Bold"
+    },
+    {
+        q: "Perintah yang digunakan untuk membatalkan perintah terakhir yang dilakukan adalah...",
+        opts: ["Redo", "Undo", "Copy", "Paste", "Cut"],
+        ans: "Undo"
+    },
+    {
+        q: "Ekstensi standar untuk dokumen yang dibuat di Microsoft Word versi terbaru adalah...",
+        opts: [".xlsx", ".pptx", ".docx", ".pdf", ".txt"],
+        ans: ".docx"
+    },
+    {
+        q: "Fitur yang digunakan untuk mengatur batas tepi kertas pada Microsoft Word adalah...",
+        opts: ["Orientation", "Size", "Columns", "Margins", "Breaks"],
+        ans: "Margins"
+    },
+    {
+        q: "Pilihan orientasi kertas yang memanjang ke samping (horizontal) disebut...",
+        opts: ["Portrait", "Landscape", "Vertical", "Normal", "Narrow"],
+        ans: "Landscape"
+    },
+    {
+        q: "Shortcut keyboard untuk mencetak (print) dokumen adalah...",
+        opts: ["Ctrl + S", "Ctrl + O", "Ctrl + P", "Ctrl + F", "Ctrl + H"],
+        ans: "Ctrl + P"
+    },
+    {
+        q: "Untuk menyimpan dokumen dengan nama baru, kita harus memilih menu...",
+        opts: ["Save", "Save As", "Open", "New", "Close"],
+        ans: "Save As"
+    },
+    {
+        q: "Fungsi dari tombol <span class='code-block'>Ctrl + Z</span> pada Microsoft Word adalah...",
+        opts: [
+            "Membatalkan perintah",
+            "Mengulang perintah",
+            "Menyimpan dokumen",
+            "Mencetak dokumen",
+            "Menghapus teks"
+        ],
+        ans: "Membatalkan perintah"
+    },
+    {
+        q: "Perangkat keras komputer yang berfungsi sebagai otak atau unit pemrosesan utama adalah...",
+        opts: ["RAM", "Harddisk", "CPU", "Monitor", "Keyboard"],
+        ans: "CPU"
+    },
+    {
+        q: "Manakah di bawah ini yang termasuk perangkat input (masukan)...",
+        opts: ["Monitor", "Printer", "Speaker", "Keyboard", "Projector"],
+        ans: "Keyboard"
+    },
+    {
+        q: "Perangkat keras yang berfungsi untuk menyimpan data secara permanen adalah...",
+        opts: ["RAM", "ROM", "Processor", "Harddisk", "VGA Card"],
+        ans: "Harddisk"
+    },
+    {
+        q: "Penyimpanan data sementara yang akan hilang saat komputer dimatikan disebut...",
+        opts: ["Flashdisk", "RAM", "Harddisk", "SSD", "CD-ROM"],
+        ans: "RAM"
+    },
+    {
+        q: "Perangkat output yang digunakan untuk menampilkan visual atau gambar hasil pengolahan data adalah...",
+        opts: ["Scanner", "Microphone", "Monitor", "Mouse", "Joystick"],
+        ans: "Monitor"
+    },
+    {
+        q: "Alat yang digunakan untuk mencetak dokumen dari komputer ke media kertas adalah...",
+        opts: ["Scanner", "Printer", "Plotter", "Speaker", "Mouse"],
+        ans: "Printer"
+    },
+    {
+        q: "Papan sirkuit utama tempat melekatnya berbagai komponen elektronik seperti CPU dan RAM disebut...",
+        opts: ["Power Supply", "Harddisk", "Motherboard", "Sound Card", "Network Card"],
+        ans: "Motherboard"
+    },
+    {
+        q: "Alat yang berfungsi untuk menggerakkan kursor di layar komputer adalah...",
+        opts: ["Keyboard", "Mouse", "Monitor", "Speaker", "Printer"],
+        ans: "Mouse"
+    },
+    {
+        q: "Perangkat yang berfungsi menyuplai aliran listrik ke seluruh komponen komputer adalah...",
+        opts: ["Motherboard", "Power Supply", "Casing", "Cooling Fan", "Processor"],
+        ans: "Power Supply"
+    },
+    {
+        q: "Perangkat keras yang berfungsi untuk mengeluarkan suara adalah...",
+        opts: ["Microphone", "Webcam", "Speaker", "Monitor", "Scanner"],
+        ans: "Speaker"
+    },
+    {
+        q: "Scanner termasuk ke dalam jenis perangkat keras...",
+        opts: ["Input", "Output", "Process", "Storage", "Peripheral"],
+        ans: "Input"
+    },
+    {
+        q: "Satuan kecepatan pada Processor (CPU) biasanya diukur dengan...",
+        opts: ["Byte", "Hertz (Hz)", "Watt", "Volt", "Pixel"],
+        ans: "Hertz (Hz)"
+    },
+    {
+        q: "Perangkat yang digunakan untuk membaca atau memutar kepingan CD/DVD disebut...",
+        opts: ["Harddisk", "Optical Drive", "Flashdisk", "Floppy Drive", "RAM"],
+        ans: "Optical Drive"
+    },
+    {
+        q: "Tombol pada keyboard yang berfungsi untuk menghapus karakter di sebelah kiri kursor adalah...",
+        opts: ["Delete", "Backspace", "Enter", "Shift", "Alt"],
+        ans: "Backspace"
+    },
+    {
+        q: "Untuk memiringkan tulisan pada Microsoft Word, kita menggunakan fitur...",
+        opts: ["Bold", "Underline", "Italic", "Shadow", "Strike"],
+        ans: "Italic"
+    },
+    {
+        q: "Ikon yang digunakan untuk membuat daftar berupa simbol (bulatan/kotak) adalah...",
+        opts: ["Numbering", "Bullets", "Alignment", "Line Spacing", "Indent"],
+        ans: "Bullets"
+    },
+    {
+        q: "Fungsi dari perangkat keras Flashdisk adalah untuk...",
+        opts: [
+            "Memproses data",
+            "Menampilkan data",
+            "Menyimpan data secara portabel",
+            "Menginput data suara",
+            "Mendinginkan suhu komputer"
+        ],
+        ans: "Menyimpan data secara portabel"
+    },
+    {
+        q: "Kumpulan dari perangkat keras komputer secara fisik dapat dipegang dan dilihat disebut...",
+        opts: ["Software", "Brainware", "Hardware", "Firmware", "Malware"],
+        ans: "Hardware"
+    },
+    {
+        q: "Alat pemroses data grafis agar tampilan di monitor lebih jernih dan lancar untuk gaming disebut...",
+        opts: ["Sound Card", "LAN Card", "VGA Card", "RAM", "Processor"],
+        ans: "VGA Card"
+    },
+    {
+        q: "Perangkat keras yang termasuk dalam kategori 'External Storage' dan mudah dibawa-bawa adalah...",
+        opts: ["RAM", "Internal Hard Disk", "Flashdisk", "Processor", "Motherboard"],
+        ans: "Flashdisk"
+    },
+    {
+        q: "Ikon berbentuk disket pada pojok kiri atas jendela Ms. Word berfungsi untuk...",
+        opts: [
+            "Membuka file",
+            "Menyimpan file",
+            "Membuat file baru",
+            "Mencetak file",
+            "Keluar aplikasi"
+        ],
+        ans: "Menyimpan file"
+    },
+    {
+        q: "Untuk mengatur jenis huruf (font) yang digunakan, kita menggunakan pilihan di tab menu...",
+        opts: ["Insert", "Home", "Layout", "View", "Help"],
+        ans: "Home"
+    },
+    {
+        q: "Tombol shortcut <span class='code-block'>Ctrl + C</span> berfungsi untuk...",
+        opts: [
+            "Memotong teks",
+            "Menempel teks",
+            "Menyalin teks",
+            "Mencetak teks",
+            "Menyimpan teks"
+        ],
+        ans: "Menyalin teks"
+    },
+    {
+        q: "Tombol shortcut <span class='code-block'>Ctrl + V</span> berfungsi untuk...",
+        opts: [
+            "Menyalin teks",
+            "Memotong teks",
+            "Menempel teks",
+            "Menyimpan teks",
+            "Mencetak teks"
+        ],
+        ans: "Menempel teks"
+    },
+    {
+        q: "Ukuran kertas standar yang sering digunakan dalam perkantoran adalah A4. Di Ms. Word, pengaturan ukuran kertas ada di menu...",
+        opts: [
+            "Home -> Size",
+            "Layout -> Size",
+            "Insert -> Size",
+            "Design -> Size",
+            "View -> Size"
+        ],
+        ans: "Layout -> Size"
+    },
+    {
+        q: "Ikon 'Bullets and Numbering' digunakan untuk...",
+        opts: [
+            "Membuat tabel",
+            "Membuat daftar urutan atau poin",
+            "Mengatur jarak baris",
+            "Memberi nomor halaman",
+            "Membuat bingkai"
+        ],
+        ans: "Membuat daftar urutan atau poin"
+    },
+    {
+        q: "Untuk membuat teks berada tepat di tengah-tengah dokumen, kita menggunakan ikon...",
+        opts: ["Align Left", "Center", "Align Right", "Justify", "Line Spacing"],
+        ans: "Center"
+    },
+    {
+        q: "Menu yang digunakan untuk melihat tampilan dokumen sebelum dicetak adalah...",
+        opts: ["Print Preview", "Print Screen", "Page Setup", "Page Break", "Outline"],
+        ans: "Print Preview"
+    },
+
+    // II. SOAL URAIAN YANG DIKONVERSI KE PILIHAN GANDA (41 - 45)
+    {
+        q: "Perbedaan mendasar antara perintah 'Save' dan 'Save As' pada Microsoft Word adalah...",
+        opts: [
+            "'Save' menyimpan perubahan pada file yang sudah ada tanpa mengubah nama/lokasi, sedangkan 'Save As' menyimpan dokumen sebagai file baru dengan nama, lokasi, atau format baru",
+            "'Save' digunakan untuk mencetak dokumen ke kertas, sedangkan 'Save As' digunakan untuk menutup aplikasi Microsoft Word",
+            "'Save' hanya dapat digunakan sekali saat dokumen dibuat, sedangkan 'Save As' digunakan untuk menghapus isi dokumen",
+            "'Save' menyimpan dokumen dalam format PDF secara otomatis, sedangkan 'Save As' hanya menyimpan gambar",
+            "'Save' membatalkan perubahan terakhir pada teks, sedangkan 'Save As' mengulangi perintah sebelumnya"
+        ],
+        ans: "'Save' menyimpan perubahan pada file yang sudah ada tanpa mengubah nama/lokasi, sedangkan 'Save As' menyimpan dokumen sebagai file baru dengan nama, lokasi, atau format baru"
+    },
+    {
+        q: "Kelompok perangkat keras yang seluruhnya termasuk kategori Input Device beserta fungsinya yang tepat adalah...",
+        opts: [
+            "Keyboard (mengetik huruf/angka), Mouse (menggerakkan kursor), dan Scanner (memindai dokumen fisik menjadi digital)",
+            "Monitor (menampilkan gambar), Printer (mencetak dokumen), dan Speaker (mengeluarkan suara)",
+            "CPU (memproses data), RAM (menyimpan sementara), dan Harddisk (menyimpan permanen)",
+            "Motherboard (papan sirkuit utama), Power Supply (penyuplai daya), dan VGA Card (pengolah grafis)",
+            "Proyektor (menampilkan layar), Plotter (mencetak ukuran besar), dan Headset (mendengarkan audio)"
+        ],
+        ans: "Keyboard (mengetik huruf/angka), Mouse (menggerakkan kursor), dan Scanner (memindai dokumen fisik menjadi digital)"
+    },
+    {
+        q: "Perbedaan utama antara RAM dan Harddisk dalam sistem komputer adalah...",
+        opts: [
+            "RAM menyimpan data secara sementara (volatile) saat program berjalan dan hilang ketika listrik mati, sedangkan Harddisk menyimpan data secara permanen (non-volatile)",
+            "RAM berfungsi mendinginkan suhu CPU, sedangkan Harddisk berfungsi menyuplai arus listrik ke komputer",
+            "RAM merupakan perangkat lunak pengolah kata, sedangkan Harddisk merupakan perangkat lunak pengolah angka",
+            "RAM menyimpan seluruh file foto dan video secara permanen, sedangkan Harddisk hanya menyimpan data sementara saat boot",
+            "RAM dipasang di luar casing menggunakan kabel USB, sedangkan Harddisk selalu menempel langsung di layar monitor"
+        ],
+        ans: "RAM menyimpan data secara sementara (volatile) saat program berjalan dan hilang ketika listrik mati, sedangkan Harddisk menyimpan data secara permanen (non-volatile)"
+    },
+    {
+        q: "Langkah-langkah yang tepat untuk membuat tabel sederhana yang terdiri dari 3 kolom dan 4 baris di Microsoft Word adalah...",
+        opts: [
+            "Klik tab Insert -> pilih Table -> arahkan kursor memilih 3 kotak ke samping (kolom) dan 4 kotak ke bawah (baris) atau klik Insert Table lalu isi Columns: 3 dan Rows: 4 -> klik OK",
+            "Klik tab Home -> pilih Bullets and Numbering -> ketik angka 3 dan 4 -> tekan tombol Enter",
+            "Klik tab Layout -> pilih Margins -> pilih ukuran kertas A4 -> tekan kombinasi tombol Ctrl + T",
+            "Klik tab View -> pilih Print Layout -> pilih Orientation Landscape -> klik kanan lalu pilih Rename",
+            "Klik tab File -> pilih Save As -> ketik nama tabel 3x4 -> tekan tombol Ctrl + P"
+        ],
+        ans: "Klik tab Insert -> pilih Table -> arahkan kursor memilih 3 kotak ke samping (kolom) dan 4 kotak ke bawah (baris) atau klik Insert Table lalu isi Columns: 3 dan Rows: 4 -> klik OK"
+    },
+    {
+        q: "Fungsi utama dari Central Processing Unit (CPU) dalam sebuah komputer adalah...",
+        opts: [
+            "Sebagai otak komputer yang mengendalikan seluruh jalannya sistem serta mengolah dan mengeksekusi setiap instruksi/perintah dari perangkat lunak maupun pengguna",
+            "Sebagai alat untuk mencetak dokumen digital menjadi lembaran fisik di atas kertas",
+            "Sebagai media penyimpanan portabel berukuran kecil yang dihubungkan melalui port USB",
+            "Sebagai perangkat masukan yang berfungsi mengubah suara manusia menjadi sinyal digital",
+            "Sebagai layar utama yang menampilkan antarmuka grafis sistem operasi kepada pengguna"
+        ],
+        ans: "Sebagai otak komputer yang mengendalikan seluruh jalannya sistem serta mengolah dan mengeksekusi setiap instruksi/perintah dari perangkat lunak maupun pengguna"
+    }
+];
+
+let examQuestions = [];
+let currentIndex = 0;
+let userAnswers = {};
+let studentName = "";
+let studentClass = "";
+
+// Algoritma Fisher-Yates untuk mengacak urutan array
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// Acak soal dan acak opsi jawaban setiap kali dimulai
+function prepareRandomizedQuestions() {
+    const shuffledQuestions = shuffleArray(rawQuestions);
+    examQuestions = shuffledQuestions.map(item => ({
+        q: item.q,
+        opts: shuffleArray(item.opts),
+        ans: item.ans
+    }));
+}
+
+function startExam() {
+    const nameInput = document.getElementById("student-name").value.trim();
+    const classInput = document.getElementById("student-class").value.trim();
+    const alertBox = document.getElementById("form-alert");
+
+    if (!nameInput || !classInput) {
+        alertBox.innerText = "Harap isi Nama Lengkap dan Kelas terlebih dahulu sebelum memulai.";
+        alertBox.style.display = "block";
+        return;
+    }
+
+    alertBox.style.display = "none";
+    studentName = nameInput;
+    studentClass = classInput;
+
+    // Reset state & acak ulang soal
+    currentIndex = 0;
+    userAnswers = {};
+    prepareRandomizedQuestions();
+
+    document.getElementById("student-badge").innerText = `${studentName} (${studentClass})`;
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("result-body").style.display = "none";
+    document.getElementById("quiz-body").style.display = "block";
+
+    showQuestion();
+}
+
+function restartExam() {
+    currentIndex = 0;
+    userAnswers = {};
+    prepareRandomizedQuestions();
+
+    document.getElementById("result-body").style.display = "none";
+    document.getElementById("quiz-body").style.display = "block";
+    showQuestion();
+}
+
+function showQuestion() {
+    const item = examQuestions[currentIndex];
+
+    document.getElementById("progress-text").innerText = `Soal ${currentIndex + 1} dari ${examQuestions.length}`;
+    document.getElementById("question-text").innerHTML = item.q;
+
+    const answerArea = document.getElementById("answer-area");
+    answerArea.innerHTML = "";
+
+    const ul = document.createElement("ul");
+    ul.className = "options";
+    const labels = ["A", "B", "C", "D", "E"];
+
+    item.opts.forEach((opt, idx) => {
+        const isChecked = userAnswers[currentIndex] === opt ? "checked" : "";
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <label>
+                <input type="radio" name="pg_option" value="${opt}" ${isChecked} onchange="saveAnswer(this.value)">
+                <span><b>${labels[idx]}.</b> ${opt}</span>
+            </label>
+        `;
+        ul.appendChild(li);
+    });
+    answerArea.appendChild(ul);
+
+    document.getElementById("prev-btn").disabled = currentIndex === 0;
+    const nextBtn = document.getElementById("next-btn");
+    if (currentIndex === examQuestions.length - 1) {
+        nextBtn.innerText = "Selesai & Kumpulkan";
+        nextBtn.classList.add("btn-success");
+    } else {
+        nextBtn.innerText = "Selanjutnya";
+        nextBtn.classList.remove("btn-success");
+    }
+}
+
+function saveAnswer(val) {
+    userAnswers[currentIndex] = val;
+}
+
+function nextQuestion() {
+    if (currentIndex < examQuestions.length - 1) {
+        currentIndex++;
+        showQuestion();
+    } else {
+        const unanswered = examQuestions.filter((_, idx) => !userAnswers[idx] || userAnswers[idx].trim() === "").length;
+        const confirmText = unanswered > 0
+            ? `Masih ada ${unanswered} soal yang belum dijawab. Apakah Anda yakin ingin mengumpulkan sekarang?`
+            : "Apakah Anda yakin ingin mengakhiri dan mengumpulkan sekarang?";
+        document.getElementById("confirm-modal-text").innerText = confirmText;
+        document.getElementById("confirm-modal-backdrop").style.display = "flex";
+    }
+}
+
+function closeConfirmModal() {
+    document.getElementById("confirm-modal-backdrop").style.display = "none";
+}
+
+function confirmFinishExam() {
+    closeConfirmModal();
+    finishExam();
+}
+
+function prevQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showQuestion();
+    }
+}
+
+function finishExam() {
+    let correctCount = 0;
+
+    examQuestions.forEach((item, idx) => {
+        if (userAnswers[idx] === item.ans) {
+            correctCount++;
+        }
+    });
+
+    const score = Math.round((correctCount / examQuestions.length) * 100);
+    const passed = score >= 75;
+
+    document.getElementById("quiz-body").style.display = "none";
+    document.getElementById("result-body").style.display = "block";
+    document.getElementById("result-student-info").innerText = `Nama: ${studentName} | Kelas: ${studentClass}`;
+    document.getElementById("final-score").innerText = score;
+    document.getElementById("final-score").style.color = passed ? "var(--success)" : "var(--danger)";
+
+    const statusBadge = document.getElementById("kktp-status");
+    statusBadge.innerText = passed ? "TUNTAS (KKTP ≥ 75)" : "BELUM TUNTAS (KKTP 75)";
+    statusBadge.style.backgroundColor = passed ? "#dcfce7" : "#fee2e2";
+    statusBadge.style.color = passed ? "#166534" : "#991b1b";
+
+    document.getElementById("score-summary").innerText = `Benar ${correctCount} dari ${examQuestions.length} soal.`;
+}
+</script>
+
+</body>
+</html>
